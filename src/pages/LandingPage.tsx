@@ -9,22 +9,12 @@ import MusicButton from '../components/MusicButton'
 import { APP_CONFIG } from '../data/config'
 
 interface LandingPageProps {
-  onOpenGift: () => void
   isPlaying: boolean
   onMusicToggle: () => void
 }
 
-export default function LandingPage({
-  onOpenGift,
-  isPlaying,
-  onMusicToggle,
-}: LandingPageProps) {
+export default function LandingPage({ isPlaying, onMusicToggle }: LandingPageProps) {
   const navigate = useNavigate()
-
-  const handleOpen = () => {
-    onOpenGift()
-    navigate('/portrait')
-  }
 
   return (
     <div className="relative min-h-svh animated-gradient flex items-center justify-center overflow-hidden">
@@ -80,7 +70,7 @@ export default function LandingPage({
           transition={{ delay: 1.3 }}
           className="mt-10"
         >
-          <Button size="lg" onClick={handleOpen}>
+          <Button size="lg" onClick={() => navigate('/portrait')}>
             Open My Gift ❤️
           </Button>
         </motion.div>

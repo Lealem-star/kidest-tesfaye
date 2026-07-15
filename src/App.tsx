@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { useAuth } from './hooks/useAuth'
@@ -25,10 +25,27 @@ function AppRoutes() {
   const { isPlaying, toggle, start } = useMusic()
   const { play: playBirthday, stop: stopBirthday } = useBirthdaySound()
   const { revealed, handleHeartClick, dismiss } = useEasterEgg()
+  const birthdayPlayedRef = useRef(false)
 
-  const handleOpenGift = useCallback(() => {
-    playBirthday()
-  }, [playBirthday])
+  const handleLogin = useCallback(
+    (password: string) => {
+      const success = login(password, APP_CONFIG.password)
+      if (success && !birthdayPlayedRef.current) {
+        birthdayPlayedRef.current = true
+        playBirthday()
+      }
+      return success
+    },
+    [login, playBirthday],
+  )
+
+  // Resume birthday song for returning sessions (already authenticated)
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && !birthdayPlayedRef.current) {
+      birthdayPlayedRef.current = true
+      playBirthday()
+    }
+  }, [isLoading, isAuthenticated, playBirthday])
 
   const handleStoryEnter = useCallback(() => {
     stopBirthday()
@@ -49,7 +66,7 @@ function AppRoutes() {
   }
 
   if (!isAuthenticated) {
-    return <PasswordScreen onLogin={(pw) => login(pw, APP_CONFIG.password)} />
+    return <PasswordScreen onLogin={handleLogin} />
   }
 
   return (
@@ -57,11 +74,7 @@ function AppRoutes() {
       <Route
         path="/"
         element={
-          <LandingPage
-            onOpenGift={handleOpenGift}
-            isPlaying={isPlaying}
-            onMusicToggle={handleMusicToggle}
-          />
+          <LandingPage isPlaying={isPlaying} onMusicToggle={handleMusicToggle} />
         }
       />
 
