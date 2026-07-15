@@ -1,7 +1,9 @@
+import { useCallback } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { useAuth } from './hooks/useAuth'
 import { useMusic } from './hooks/useMusic'
+import { useBirthdaySound } from './hooks/useBirthdaySound'
 import { useEasterEgg } from './hooks/useEasterEgg'
 import { APP_CONFIG } from './data/config'
 import LoadingScreen from './components/LoadingScreen'
@@ -21,7 +23,22 @@ import FinalPage from './pages/FinalPage'
 function AppRoutes() {
   const { isAuthenticated, isLoading, login } = useAuth()
   const { isPlaying, toggle, start } = useMusic()
+  const { play: playBirthday, stop: stopBirthday } = useBirthdaySound()
   const { revealed, handleHeartClick, dismiss } = useEasterEgg()
+
+  const handleOpenGift = useCallback(() => {
+    playBirthday()
+  }, [playBirthday])
+
+  const handleStoryEnter = useCallback(() => {
+    stopBirthday()
+    start()
+  }, [stopBirthday, start])
+
+  const handleMusicToggle = useCallback(() => {
+    if (!isPlaying) stopBirthday()
+    toggle()
+  }, [isPlaying, stopBirthday, toggle])
 
   if (isLoading) {
     return (
@@ -37,14 +54,23 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<LandingPage onStart={start} />} />
+      <Route
+        path="/"
+        element={
+          <LandingPage
+            onOpenGift={handleOpenGift}
+            isPlaying={isPlaying}
+            onMusicToggle={handleMusicToggle}
+          />
+        }
+      />
 
       <Route
         path="/portrait"
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
@@ -58,12 +84,12 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
           >
-            <TimelinePage />
+            <TimelinePage onEnter={handleStoryEnter} />
           </ExperienceLayout>
         }
       />
@@ -72,7 +98,7 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
@@ -86,7 +112,7 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
@@ -100,7 +126,7 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
@@ -114,7 +140,7 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
@@ -128,7 +154,7 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}
@@ -142,7 +168,7 @@ function AppRoutes() {
         element={
           <ExperienceLayout
             isPlaying={isPlaying}
-            onMusicToggle={toggle}
+            onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
             easterEggRevealed={revealed}

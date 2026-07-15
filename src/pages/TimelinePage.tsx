@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FaHeart } from 'react-icons/fa'
 import { timelineData } from '../data/timeline'
@@ -7,13 +7,21 @@ import SectionTitle from '../components/ui/SectionTitle'
 import GlassCard from '../components/ui/GlassCard'
 import PageNav from '../components/layout/PageNav'
 
-export default function TimelinePage() {
+interface TimelinePageProps {
+  onEnter: () => void
+}
+
+export default function TimelinePage({ onEnter }: TimelinePageProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start center', 'end center'],
   })
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+
+  useEffect(() => {
+    onEnter()
+  }, [onEnter])
 
   return (
     <div>
@@ -23,10 +31,8 @@ export default function TimelinePage() {
       />
 
       <div ref={containerRef} className="relative max-w-2xl mx-auto py-4">
-        {/* Background track */}
         <div className="absolute left-6 md:left-8 top-0 bottom-0 w-0.5 bg-primary/10" />
 
-        {/* Animated progress line */}
         <motion.div
           className="absolute left-6 md:left-8 top-0 w-0.5 bg-linear-to-b from-primary via-secondary to-accent origin-top"
           style={{ height: lineHeight }}

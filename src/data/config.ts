@@ -3,7 +3,8 @@ export const APP_CONFIG = {
   girlfriendName: 'Kidest',
   password: 'I Love Lealem',
   countdownDate: '2026-08-15T00:00:00',
-  musicUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  musicUrl: '/audio/YefkrMirchaye.mp3',
+  birthdaySoundUrl: '/audio/happy-birthday.mp3',
   portraitImage: '/images/kidest.jpg',
   easterEggClicks: 5,
 } as const

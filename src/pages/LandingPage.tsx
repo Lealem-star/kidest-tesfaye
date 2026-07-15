@@ -5,17 +5,24 @@ import FloatingHearts from '../components/effects/FloatingHearts'
 import Sparkles from '../components/effects/Sparkles'
 import RosePetals from '../components/effects/RosePetals'
 import Button from '../components/ui/Button'
+import MusicButton from '../components/MusicButton'
 import { APP_CONFIG } from '../data/config'
 
 interface LandingPageProps {
-  onStart: () => void
+  onOpenGift: () => void
+  isPlaying: boolean
+  onMusicToggle: () => void
 }
 
-export default function LandingPage({ onStart }: LandingPageProps) {
+export default function LandingPage({
+  onOpenGift,
+  isPlaying,
+  onMusicToggle,
+}: LandingPageProps) {
   const navigate = useNavigate()
 
   const handleOpen = () => {
-    onStart()
+    onOpenGift()
     navigate('/portrait')
   }
 
@@ -24,6 +31,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       <FloatingHearts count={20} />
       <RosePetals />
       <Sparkles />
+      <MusicButton isPlaying={isPlaying} onToggle={onMusicToggle} />
 
       <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
         <motion.div
