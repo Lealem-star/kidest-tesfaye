@@ -5,7 +5,7 @@ export const APP_CONFIG = {
   countdownDate: '2026-08-15T00:00:00',
   musicUrl: '/audio/YefkrMirchaye.mp3',
   birthdaySoundUrl: '/audio/happy-birthday.mp3',
-  portraitImage: '/images/kidest.jpg',
+  portraitImage: '/images/kidest.png',
   easterEggClicks: 5,
 } as const
 
