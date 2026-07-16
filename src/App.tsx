@@ -22,10 +22,18 @@ import FinalPage from './pages/FinalPage'
 
 function AppRoutes() {
   const { isAuthenticated, isLoading, login } = useAuth()
-  const { isPlaying, toggle, start } = useMusic()
-  const { play: playBirthday, stop: stopBirthday } = useBirthdaySound()
+  const { isPlaying, start, pause: pauseMusic } = useMusic()
+  const {
+    isPlaying: isBirthdayPlaying,
+    play: playBirthday,
+    stop: stopBirthday,
+    pause: pauseBirthday,
+  } = useBirthdaySound()
   const { revealed, handleHeartClick, dismiss } = useEasterEgg()
   const birthdayPlayedRef = useRef(false)
+  const storyReachedRef = useRef(false)
+
+  const isAudioPlaying = isPlaying || isBirthdayPlaying
 
   const handleLogin = useCallback(
     (password: string) => {
@@ -48,14 +56,23 @@ function AppRoutes() {
   }, [isLoading, isAuthenticated, playBirthday])
 
   const handleStoryEnter = useCallback(() => {
+    storyReachedRef.current = true
     stopBirthday()
     start()
   }, [stopBirthday, start])
 
   const handleMusicToggle = useCallback(() => {
-    if (!isPlaying) stopBirthday()
-    toggle()
-  }, [isPlaying, stopBirthday, toggle])
+    if (isAudioPlaying) {
+      pauseBirthday()
+      pauseMusic()
+      return
+    }
+    if (storyReachedRef.current) {
+      start()
+    } else {
+      playBirthday()
+    }
+  }, [isAudioPlaying, pauseBirthday, pauseMusic, start, playBirthday])
 
   if (isLoading) {
     return (
@@ -74,7 +91,7 @@ function AppRoutes() {
       <Route
         path="/"
         element={
-          <LandingPage isPlaying={isPlaying} onMusicToggle={handleMusicToggle} />
+          <LandingPage isPlaying={isAudioPlaying} onMusicToggle={handleMusicToggle} />
         }
       />
 
@@ -82,7 +99,7 @@ function AppRoutes() {
         path="/portrait"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -96,7 +113,7 @@ function AppRoutes() {
         path="/story"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -110,7 +127,7 @@ function AppRoutes() {
         path="/reasons"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -124,7 +141,7 @@ function AppRoutes() {
         path="/gallery"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -138,7 +155,7 @@ function AppRoutes() {
         path="/letter"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -152,7 +169,7 @@ function AppRoutes() {
         path="/countdown"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -166,7 +183,7 @@ function AppRoutes() {
         path="/verse"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}
@@ -180,7 +197,7 @@ function AppRoutes() {
         path="/quiz"
         element={
           <ExperienceLayout
-            isPlaying={isPlaying}
+            isPlaying={isAudioPlaying}
             onMusicToggle={handleMusicToggle}
             onHeartClick={handleHeartClick}
             onDismissEasterEgg={dismiss}

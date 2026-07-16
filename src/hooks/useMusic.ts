@@ -50,5 +50,12 @@ export function useMusic() {
     setIsPlaying(false)
   }, [])
 
-  return { isPlaying, hasInteracted, toggle, start, stop }
+  const pause = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+    }
+    setIsPlaying(false)
+  }, [])
+
+  return { isPlaying, hasInteracted, toggle, start, stop, pause }
 }

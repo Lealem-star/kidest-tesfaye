@@ -2,79 +2,9 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaHeart } from 'react-icons/fa'
-import Lottie from 'lottie-react'
 import { useConfetti } from '../hooks/useConfetti'
 import FloatingHearts from '../components/effects/FloatingHearts'
 import Button from '../components/ui/Button'
-
-const heartAnimation = {
-  v: '5.5.7',
-  fr: 30,
-  ip: 0,
-  op: 60,
-  w: 200,
-  h: 200,
-  nm: 'Heart',
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: 'Heart',
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: { a: 0, k: 0 },
-        p: { a: 0, k: [100, 100, 0] },
-        a: { a: 0, k: [0, 0, 0] },
-        s: {
-          a: 1,
-          k: [
-            { t: 0, s: [80, 80, 100] },
-            { t: 30, s: [120, 120, 100] },
-            { t: 60, s: [80, 80, 100] },
-          ],
-        },
-      },
-      shapes: [
-        {
-          ty: 'gr',
-          it: [
-            {
-              ty: 'sh',
-              ks: {
-                a: 0,
-                k: {
-                  c: true,
-                  v: [
-                    [0, -20],
-                    [-20, -40],
-                    [-40, -20],
-                    [-20, 10],
-                    [0, 40],
-                    [20, 10],
-                    [40, -20],
-                    [20, -40],
-                  ],
-                },
-              },
-            },
-            {
-              ty: 'fl',
-              c: { a: 0, k: [0.914, 0.118, 0.388, 1] },
-              o: { a: 0, k: 100 },
-            },
-          ],
-        },
-      ],
-      ip: 0,
-      op: 60,
-      st: 0,
-    },
-  ],
-}
 
 export default function FinalPage() {
   const navigate = useNavigate()
@@ -100,9 +30,19 @@ export default function FinalPage() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 150 }}
-          className="w-32 h-32 mx-auto"
+          className="relative w-32 h-32 mx-auto flex items-center justify-center"
         >
-          <Lottie animationData={heartAnimation} loop />
+          <motion.div
+            className="absolute inset-0 rounded-full bg-primary/20 blur-2xl"
+            animate={{ scale: [1, 1.4, 1], opacity: [0.4, 0.8, 0.4] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <FaHeart className="relative text-primary text-7xl drop-shadow-lg" />
+          </motion.div>
         </motion.div>
 
         <motion.h1
