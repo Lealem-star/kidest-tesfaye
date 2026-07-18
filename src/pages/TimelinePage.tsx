@@ -52,14 +52,6 @@ export default function TimelinePage({ onEnter }: TimelinePageProps) {
               transition={{ duration: 0.7, delay: index * 0.08, ease: 'easeOut' }}
               className="relative pl-10 sm:pl-12 md:pl-14 mb-10 last:mb-0"
             >
-              <motion.div
-                className="absolute left-6 sm:left-8 md:left-10 top-[4.25rem] w-2.5 h-2.5 rounded-full bg-primary shadow-md shadow-primary/30 ring-4 ring-background"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: 'spring', stiffness: 300, delay: index * 0.1 }}
-              />
-
               <GlassCard
                 delay={index * 0.04}
                 className="hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-500 px-4 sm:px-8 md:px-10"
