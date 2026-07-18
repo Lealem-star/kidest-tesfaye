@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-// import { FaHeart } from 'react-icons/fa'
+import { FaHeart } from 'react-icons/fa'
 import { timelineData } from '../data/timeline'
 import { APP_CONFIG } from '../data/config'
 import SectionTitle from '../components/ui/SectionTitle'
@@ -47,15 +47,15 @@ export default function TimelinePage({ onEnter }: TimelinePageProps) {
             transition={{ duration: 0.7, delay: index * 0.08, ease: 'easeOut' }}
             className="relative pl-16 md:pl-20 mb-10 last:mb-0"
           >
-            <motion.div
+            {/* <motion.div
               className="absolute left-4 md:left-6 top-7 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 ring-4 ring-background"
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 300, delay: index * 0.1 }}
             >
-              {/* <FaHeart className="text-white text-[9px]" /> */}
-            </motion.div>
+              <FaHeart className="text-white text-[9px]" />
+            </motion.div> */}
 
             <GlassCard delay={index * 0.04} className="hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-500">
               <div className="flex items-center gap-2 mb-1">
