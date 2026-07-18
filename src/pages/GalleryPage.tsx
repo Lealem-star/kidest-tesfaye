@@ -39,7 +39,7 @@ export default function GalleryPage() {
 
   return (
     <div>
-      <SectionTitle title="Our Memories" subtitle="Every picture tells our story" />
+      <SectionTitle title="Our Memories" subtitle="ፎቶሽን የላኪልኝ ምክንያት ይህ ነበር!" />
 
       <div className="masonry-grid mb-12">
         {galleryData.map((image: GalleryImage, index: number) => (
