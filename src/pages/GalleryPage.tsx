@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FaTimes, FaSearchPlus, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Pagination } from 'swiper/modules'
-import { galleryData } from '../data/gallery'
+import { galleryData, type GalleryImage } from '../data/gallery'
 import SectionTitle from '../components/ui/SectionTitle'
 import PageNav from '../components/layout/PageNav'
 import 'swiper/css'
@@ -42,7 +42,7 @@ export default function GalleryPage() {
       <SectionTitle title="Our Memories" subtitle="Every picture tells our story" />
 
       <div className="masonry-grid mb-12">
-        {galleryData.map((image, index) => (
+        {galleryData.map((image: GalleryImage, index: number) => (
           <motion.div
             key={image.id}
             initial={{ opacity: 0, y: 20 }}
@@ -65,31 +65,33 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      <Swiper
-        effect="coverflow"
-        grabCursor
-        centeredSlides
-        slidesPerView="auto"
-        coverflowEffect={{ rotate: 30, stretch: 0, depth: 100, modifier: 1 }}
-        pagination={{ clickable: true }}
-        modules={[EffectCoverflow, Pagination]}
-        className="pb-12"
-      >
-        {galleryData.map((image, index) => (
-          <SwiperSlide
-            key={image.id}
-            className="w-64! md:w-80! cursor-pointer"
-            onClick={() => setLightboxIndex(index)}
-          >
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full rounded-2xl shadow-lg"
-              loading="lazy"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {galleryData.length > 1 && (
+        <Swiper
+          effect="coverflow"
+          grabCursor
+          centeredSlides
+          slidesPerView="auto"
+          coverflowEffect={{ rotate: 30, stretch: 0, depth: 100, modifier: 1 }}
+          pagination={{ clickable: true }}
+          modules={[EffectCoverflow, Pagination]}
+          className="pb-12"
+        >
+          {galleryData.map((image: GalleryImage, index: number) => (
+            <SwiperSlide
+              key={image.id}
+              className="w-64! md:w-80! cursor-pointer"
+              onClick={() => setLightboxIndex(index)}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full rounded-2xl shadow-lg"
+                loading="lazy"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
 
       <AnimatePresence>
         {lightboxIndex !== null && (
