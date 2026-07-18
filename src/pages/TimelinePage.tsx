@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { FaHeart } from 'react-icons/fa'
+// import { FaHeart } from 'react-icons/fa'
 import { timelineData } from '../data/timeline'
 import { APP_CONFIG } from '../data/config'
 import SectionTitle from '../components/ui/SectionTitle'
