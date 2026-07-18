@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-// import { FaHeart } from 'react-icons/fa'
 import { timelineData } from '../data/timeline'
 import { APP_CONFIG } from '../data/config'
 import SectionTitle from '../components/ui/SectionTitle'
@@ -45,17 +44,15 @@ export default function TimelinePage({ onEnter }: TimelinePageProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, delay: index * 0.08, ease: 'easeOut' }}
-            className="relative pl-16 md:pl-20 mb-10 last:mb-0"
+            className="relative pl-14 md:pl-16 mb-10 last:mb-0"
           >
-            {/* <motion.div
-              className="absolute left-4 md:left-6 top-7 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 ring-4 ring-background"
+            <motion.div
+              className="absolute left-4 md:left-6 top-[3.75rem] w-2.5 h-2.5 rounded-full bg-primary shadow-md shadow-primary/30 ring-4 ring-background"
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 300, delay: index * 0.1 }}
-            >
-              <FaHeart className="text-white text-[9px]" />
-            </motion.div> */}
+            />
 
             <GlassCard delay={index * 0.04} className="hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-500">
               <div className="flex items-center gap-2 mb-1">
@@ -67,11 +64,11 @@ export default function TimelinePage({ onEnter }: TimelinePageProps) {
                   {String(index + 1).padStart(2, '0')}
                 </span>
               </div>
-              <h3 className="text-xl md:text-2xl font-semibold text-dark mb-2">
+              <h3 className="text-xl md:text-2xl font-semibold text-dark mb-3">
                 {item.title}
               </h3>
-              <p className="text-dark/70 text-sm md:text-base leading-relaxed">
-                {item.description}
+              <p className="text-dark/70 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                {item.description.trim()}
               </p>
             </GlassCard>
           </motion.div>
