@@ -46,7 +46,7 @@ export default function ReasonsPage() {
   return (
     <div>
       <SectionTitle
-        title="30 Reasons Why I Love You"
+        title="ስሜት ባይገለፀም 10 Reasons Why I Love You"
         subtitle="Click or hover each card to reveal a reason"
       />
 
